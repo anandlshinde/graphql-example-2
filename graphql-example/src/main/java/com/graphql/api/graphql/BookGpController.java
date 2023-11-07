@@ -1,6 +1,9 @@
 package com.graphql.api.graphql;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.graphql.dto.BookInput;
+import com.graphql.dto.BookReponseModel;
 import com.graphql.entity.Book;
 import com.graphql.mapper.BookMapper;
 import com.graphql.service.BookService;
@@ -10,8 +13,7 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @AllArgsConstructor
@@ -31,8 +33,13 @@ public class BookGpController {
     }
 
     @QueryMapping("getBook")
-    public Optional<Book> getBook(@Argument int bookId) {
-        return bookService.getBookById(bookId);
+    public BookReponseModel getBook(@Argument int bookId) throws JsonProcessingException {
+        Optional<Book> response = bookService.getBookById(bookId);
+        BookReponseModel bookReponseModel=new BookReponseModel();
+        bookReponseModel.setName(response.get().getName());
+        Map<String, Object> mapping = new ObjectMapper().readValue(response.get().getAttributes(), HashMap.class);
+        bookReponseModel.setAttributes(mapping);
+        return bookReponseModel;
     }
 
 //https://github.com/graphql-java-generator/GraphQL-Forum-Maven-Tutorial-server

@@ -10,6 +10,16 @@ type Book{
     attributes: JSON
 }
 
+type BookReponseModel{
+    id:ID!
+    name:String
+    description:String
+    price:Float
+    author:String
+    pages:Int
+    attributes: JSON
+}
+
 
 
 type Mutation{
@@ -17,7 +27,7 @@ type Mutation{
 }
 type Query{
     allBooks:[Book]
-    getBook(bookId:Int):Book
+    getBook(bookId:Int):BookReponseModel
 }
 
 
@@ -29,7 +39,7 @@ input BookInput{
     price:Float
     author:String
     pages:Int
-    attributes: JSON
+    attributes: String
 }
 
 scalar JSON

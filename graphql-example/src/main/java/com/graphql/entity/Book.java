@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
+import org.json.JSONObject;
 
 import javax.persistence.*;
 
@@ -22,6 +24,6 @@ public class Book {
     private String  author;
     private double price;
     private int pages;
-    @JsonFormat
+    @Column(name = "attributes",columnDefinition = "json")
     private String attributes;
 }

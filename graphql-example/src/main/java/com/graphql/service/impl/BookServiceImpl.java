@@ -2,11 +2,13 @@ package com.graphql.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.graphql.entity.Book;
 import com.graphql.repository.BookRepository;
 import com.graphql.service.BookService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +24,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book saveBook(Book book) {
         ObjectMapper objectMapper=new ObjectMapper();
-        try {
-            String attributes = objectMapper.writeValueAsString(book.getAttributes());
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", "studytonight");
+            jsonObject.put("address", "Noida");
+        //book.setAttributes(jsonObject.toString());
         return bookRepository.save(book);
     }
 
